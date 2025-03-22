@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static com.duonghoang.quan_li_nhan_su.util.DBUtil.getInstance;
+import static com.duonghoang.test_input.util.DBUtil.getInstance;
 
 public abstract class BaseDAO {
     public static <T> List<T> executeQueryPrepareStatementFetchList(String query, Function<ResultSet, T> mapper, Object... params) throws SQLException {
@@ -35,11 +35,11 @@ public abstract class BaseDAO {
     }
 
 
-    public static boolean executeUpdateWithPreparedStatement(String query, Object... params) throws SQLException {
+    public static int executeUpdateWithPreparedStatement(String query, Object... params) throws SQLException {
         try (Connection connection = getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             setParams(preparedStatement, params);
-            return preparedStatement.executeUpdate() > 0;
+            return preparedStatement.executeUpdate();
         }
     }
 
